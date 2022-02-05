@@ -8,8 +8,8 @@ data lake. Please go to rtdl's repo and give it a star.
 
 ## How to Use 🌱
 Find details on how to use Nextra [here](https://nextra.vercel.app/).  
-    *   To run rtdl's documentation website locally in dev mode, run `yarn next dev`.
-    *   To build rtdl's documenatation wesite locally to the out folder, run `yarn next build && yarn next export`.
+  * To run rtdl's documentation website locally in dev mode, run `yarn next dev`.
+  * To build rtdl's documenatation wesite locally to the out folder, run `yarn next build && yarn next export`.
 
 ## License 🤝
 [MIT](./LICENSE)
