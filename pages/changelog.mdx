@@ -1,0 +1,23 @@
+---
+title: Changelog
+description: rtdl changelog
+---
+
+# Changelog
+
+## V0.0.1 - 20220126
+
+### What works?
+rtdl is not full-featured yet, but it is currently functional. You can configure streams that 
+ingest json from an rtdl endpoint, process them into Parquet, and save the files to a destination 
+configured in your stream. rtdl can write files locally, to AWS S3, and to GCP Cloud Storage.
+
+### What doesn't work/what's next on the roadmap?
+  * Add CONTRIBUTING.md and a contributor license agreement
+  * Cataloging data in Hive Metastore
+    * This will let you use your data with a much broader range of data tools.
+  * Adding Presto to the stack
+    * This will make connecting into a whole ecosystem of analytics, BI, and data science tools 
+    much easier
+  * Adding support for Azure Blob Storage
+  * Add support for more compressions - currently default Snappy compression is supported
