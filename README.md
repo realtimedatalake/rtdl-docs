@@ -11,7 +11,7 @@ Find details on how to use Nextra [here](https://nextra.vercel.app/).
   * Install Next.js, Nextra and React, run `yarn add next nextra react react-dom`.
   * Install the docs theme, run `yarn add nextra-theme-docs`.
   * To run rtdl's documentation website locally in dev mode, run `yarn next dev`.
-  * To build rtdl's documenatation wesite locally to the out folder, run `rm -rf docs/ && yarn next build && yarn next export -o docs/ && cp .nojekyll docs/`.
+  * To build rtdl's documenatation wesite locally to the out folder, run `rm -rf docs/ && yarn next build && yarn next export -o docs/ && > docs/.nojekyll`.
 
 ## License 🤝
 [MIT](./LICENSE)
