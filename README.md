@@ -8,6 +8,7 @@ data lake. Please go to rtdl's repo and give it a star.
 
 ## How to Use 🌱
 Find details on how to use Nextra [here](https://nextra.vercel.app/).  
+  * cd into the `docs` folder.
   * Run `npm install`.
   * Install Next.js, Nextra and React, run `npm install next nextra react react-dom`.
   * Install the docs theme, run `npm install nextra-theme-docs`.
