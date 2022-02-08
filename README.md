@@ -12,8 +12,8 @@ Find details on how to use Nextra [here](https://nextra.vercel.app/).
   * Install Next.js, Nextra and React, run `npm install next nextra react react-dom`.
   * Install the docs theme, run `npm install nextra-theme-docs`.
   * To run rtdl's documentation website locally in dev mode, run `npm run dev`. You can 
-    view the site at [http://localhost:3000/rtdl-docs/](http://localhost:3000/rtdl-docs/).
-  * To build rtdl's documenatation wesite locally to the `/.next` folder, run `npm run build-prod`.
+    view the site at [http://localhost:3000/docs/](http://localhost:3000/docs/).
+  * To build rtdl's documenatation wesite locally to the `/out` folder, run `npm run build-prod`.
 
 ## License 🤝
 [MIT](./LICENSE)
