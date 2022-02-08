@@ -6,5 +6,5 @@ const withNextra = require('nextra')({
 })
 module.exports = withNextra({
     // Gavin, 20220205: Added for GitHub Pages compatibility.
-    basePath: '/rtdl-docs',
+    basePath: '/docs',
 })
