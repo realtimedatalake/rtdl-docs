@@ -5,6 +5,6 @@ const withNextra = require('nextra')({
     // optional: add `unstable_staticImage: true` to enable Nextra's auto image import
 })
 module.exports = withNextra({
-    // Gavin, 20220208: Removed on move to Netlify
+    // Gavin, 20220208: Updated for Netlify
     basePath: '/docs',
 })

@@ -1,6 +1,6 @@
 export default {
     github: 'https://github.com/realtimedatalake/rtdl', // GitHub link in the navbar
-    docsRepositoryBase: 'https://github.com/realtimedatalake/rtdl-docs/blob/main', // base URL for the docs repository
+    docsRepositoryBase: 'https://github.com/realtimedatalake/rtdl-docs/tree/main/docs/pages/', // base URL for the docs repository
     titleSuffix: ' – rtdl⚡️',
     nextLinks: true,
     prevLinks: true,
