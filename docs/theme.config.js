@@ -73,31 +73,31 @@ export default {
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="docs/apple-touch-icon.png"
+          href="apple-touch-icon.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="192x192"
-          href="docs/android-chrome-192x192.png"
+          href="android-chrome-192x192.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="docs/favicon-32x32.png"
+          href="favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="docs/favicon-16x16.png"
+          href="favicon-16x16.png"
         />
         <link
           rel="icon"
-          href="docs/favicon.ico"
+          href="favicon.ico"
         />
-        <meta name="msapplication-TileImage" content="docs/mstile-150x150.png" />
+        <meta name="msapplication-TileImage" content="mstile-150x150.png" />
       </>
     ),
 }
