@@ -6,5 +6,5 @@ const withNextra = require('nextra')({
 })
 module.exports = withNextra({
     // Gavin, 20220208: Removed on move to Netlify
-    basePath: '',
+    basePath: '/docs',
 })
