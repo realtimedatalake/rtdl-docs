@@ -1,0 +1,9 @@
+# rtdl's Setup for Azure 😎
+
+Follow these steps to set up Azure Blog Storage before adding it as a destination in RudderStack:
+
+- Login to your [Azure Portal](https://portal.azure.com/).
+- Create a Storage Account of type General-purpose v2 account.
+- Choose your storage account and under `Blob service` , click on `containers`.
+- Create a new container. This is where all your event files will be dumped.
+- You also need to provide an access key to authorize RudderStack to write to your container. Under `settings` click on `Access keys`. You can find your access keys here.
