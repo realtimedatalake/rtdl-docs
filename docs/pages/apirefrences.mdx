@@ -1,30 +1,34 @@
-# rtdl API refrences ⚡️📚
+# rtdl API refrence ⚡️📚
 
-```
-{
-	"active": true,
-    "message_type": "test-msg-local",
-	"file_store_type_id": 1,
-	"folder_name": "testFolderLocal",
-    "partition_time_id": 1,
-    "compression_type_id": 1
-}
-```
+## createStream
+**POST**  
+  * `createStream` call for creating a local data lake.  
+    ```
+    {
+        "active": true,
+        "message_type": "test-msg-local",
+        "file_store_type_id": 1,
+        "folder_name": "testFolderLocal",
+        "partition_time_id": 1,
+        "compression_type_id": 1
+    }
+    ```
 
-```
-{
-	"active": true,
-    "message_type": "test-msg-aws",
-	"file_store_type_id": 2,
-	"region": "us-west1",
-	"bucket_name": "testBucketAWS",
-	"folder_name": "testFolderAWS",
-    "partition_time_id": 1,
-    "compression_type_id": 1,
-	"aws_access_key_id": "[aws_access_key_id]",
-    "aws_secret_access_key": "[aws_secret_access_key]"
-}
-```
+  * `createStream` call for creating an AWS S3 data lake.  
+    ```
+    {
+        "active": true,
+        "message_type": "test-msg-aws",
+        "file_store_type_id": 2,
+        "region": "us-west1",
+        "bucket_name": "testBucketAWS",
+        "folder_name": "testFolderAWS",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+    }
+    ```
 
 ```
 {

@@ -55,10 +55,10 @@ export default {
           </g>
         </svg>
         &nbsp;&nbsp;
-        <span className="mr-2 font-extrabold hidden md:inline">rtdl ⚡️</span>
-        <span className="font-normal hidden md:inline">
+        <span className="mr-2 font-extrabold hidden md:inline">rtdl ⚡️ Docs</span>
+        {/* <span className="font-normal hidden md:inline">
           The Real-Time Data Lake - Documentation
-        </span>
+        </span> */}
       </>
     ),
     head: (
