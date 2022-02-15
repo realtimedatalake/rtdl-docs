@@ -1,0 +1,40 @@
+# rtdl setup with GCP 🤷🏽‍♂️
+
+To have rtdl build your data lake on Google Cloud Storage, you need to:
+  1.  Create a new Service Account.
+      * Go to http://cloud.google.com/iam
+      * Click VIEW CONSOLE.
+      * Select a project
+      * In the sidebar, click Service Accounts.
+      * Click CREATE SERVICE ACCOUNT.
+      * In the Name field, give your service account a name, for example, Segment Upload Objects.
+      * In the Description field, enter a description that will remind you the purpose of the 
+        role. For example, This role gives Segment access to upload raw data files to our bucket.
+      * Click CREATE.
+      * Click CONTINUE to skip adding Service Account Permissions.
+      * Click CREATE KEY.
+      * Select Key Type JSON.
+      * Click CREATE to create the key.
+        * A key downloads to your computer. Save it for use in configuring your stream in rtdl.
+      * Click on DONE to finish creating your Service Account.
+      * In the sidebar, click IAM.
+      * Click the ADD button to add a new Principal.
+      * Enter the email address for the Service Account you just created in the New Principals 
+        field.
+      * Select the `Storage Admin` role.
+      * Click SAVE
+  2.  Create a new storage bucket.
+      * Go to https://cloud.google.com/storage.
+      * Click **GO TO CONSOLE**.
+      * Select a project.
+      * Click **CREATE BUCKET**.
+      * In the Name field, enter a name for your bucket. Any name will 
+        work here, but we recommend that include the word “rtdl”, for example: `rtdl-data`.
+      * In the Storage Class field, we recommend ``Multi-Regional``.
+      * In the Access Control field, choose ``Set object-level and bucket-level permissions``.
+      * No Advanced Options are necessary. Click **Create** to finish creating the bucket.
+      * Click the tab **PERMISSIONS** to show bucket permissions.
+      * Click **ADD MEMBERS**.
+      * In the **NEW MEMBERS** text input, enter the email address associated with the Service 
+        Account we created.
+      * Click **SAVE**.

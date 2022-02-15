@@ -1,0 +1,9 @@
+# rtdl setup with Azure 🤷🏽‍♂️
+
+To have rtdl build your data lake on Azure Blob Storage, you need to:
+  1.  Login to your [Azure Portal](https://portal.azure.com/).
+  2.  Create a Storage Account of type General-purpose v2 account.
+  3.  Choose your storage account and under Blob Service , click on `Containers`.
+  4.  Create a new container. This is where all your data lake files will be stored.
+  5.  Under Settings click on `Access Keys`.
+      * Save the Storage Account Name and Access Key for use in configuring your stream in rtdl.

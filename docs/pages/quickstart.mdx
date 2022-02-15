@@ -3,7 +3,7 @@ title: Quickstart
 description: rtdl quickstart instructions
 ---
 
-# Quickstart
+# Quickstart 🌱
 ## Initialize the rtdl services
 1.  Run `docker compose -f docker-compose.init.yml up -d`.
     * **Note:** This configuration should be fault-tolerant, but if any containers or 
@@ -18,38 +18,57 @@ description: rtdl quickstart instructions
 
 ## Interact with rtdl services and create a data lake
 All API calls used to interact with rtdl have Postman examples in our [postman-rtdl-public repo](https://github.com/realtimedatalake/postman-rtdl-public).
-1.  If you are building your data lake on AWS or GCP, configure your storage buckets and access 
-    by following the [Segment docs for AWS S3](https://segment.com/docs/connections/storage/catalog/aws-s3/) 
-    or the [Segment docs for Google Cloud Storage](https://segment.com/docs/connections/storage/catalog/google-cloud-storage/). 
-    * For AWS S3 storage, you will need your bucket name, your AWS access key id, and your AWS
-      secret access key.
+1.  If you are building your data lake on a cloud vendor's storage service, configure your storage 
+    buckets and access:
+    * For AWS S3, follow the [Segment docs for AWS S3](https://segment.com/docs/connections/storage/catalog/aws-s3/). 
+      You will need your bucket name, your AWS access key id, and your AWS secret access key.
       * For your IAM setup, you can use the below policy:
         ```
         {
             "Version": "2012-10-17",
             "Statement": [
                 {
-              "Sid": "PutObjectsInBucket",
-              "Effect": "Allow",
-              "Action": [
-                "s3:GetObject",
-                "s3:PutObject",
-                "s3:PutObjectAcl",
-                "s3:DeleteObject",
-                "s3:ListBucket"
-              ],
-              "Resource": [
-                "arn:aws:s3:::[your-bucket-name]/",
-                "arn:aws:s3:::[your-bucket-name]/*"
-              ]
-            }
-          ]
+                    "Sid": "ListAllBuckets",
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:GetBucketLocation",
+                        "s3:ListAllMyBuckets"
+                    ],
+                    "Resource": [
+                        "arn:aws:s3:::*"
+                    ]
+                },
+                {
+                    "Sid": "ListBucket",
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:ListBucket"
+                    ],
+                    "Resource": [
+                        "arn:aws:s3:::rtdl-test-bucket-aws"
+                    ]
+                },
+                {
+                    "Sid": "ManageBucket",
+                    "Effect": "Allow",
+                    "Action": [
+                        "s3:GetObject",
+                        "s3:PutObject",
+                        "s3:PutObjectAcl",
+                        "s3:DeleteObject"
+                    ],
+                    "Resource": [
+                        "arn:aws:s3:::rtdl-test-bucket-aws/*"
+                    ]
+                }
+            ]
         }
         ```
-    * For GCP Cloud Storage, you will need your credentials in flattened json (remove all the 
-      newlines).
-
-2.  Instrument your website with [analytics-next-cc](https://github.com/realtimedatalake/analytics-next-cc) - 
+    * For GCP Cloud Storage, follow the [Segment docs for Google Cloud Storage](https://segment.com/docs/connections/storage/catalog/google-cloud-storage/). 
+      Instead of giving your service account object-level access as described in Segment's 
+      documentation, make your service account a Principal in IAM and give it `Storage Admin` access.
+      * You will need your credentials in flattened json (remove all the newlines).
+3.  Instrument your website with [analytics-next-cc](https://github.com/realtimedatalake/analytics-next-cc) - 
     our fork of [Segment's Analytics.js 2.0](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/) 
     that lets you cc all of the events you send to Segment to rtdl's ingest endpoint. Its 
     snippet is a drop-in replacement of Analytics.js 2.0/Analytics.js. Using this makes it 
@@ -69,7 +88,7 @@ All API calls used to interact with rtdl have Postman examples in our [postman-r
 	rtdl will default to a message type ```rtdl_default``` if message type is absent in both stream definition and actual message
 	
 	
-3.  Create/read/update/delete `stream` configurations that define a source data stream into 
+4.  Create/read/update/delete `stream` configurations that define a source data stream into 
     your data lake and the destination data store as well as configure folder partitioning and 
     file compression. It also allows for activating/deactivating a stream.
     * For any json data being sent to the ingest endpoint, the generated `stream_id` or the 
