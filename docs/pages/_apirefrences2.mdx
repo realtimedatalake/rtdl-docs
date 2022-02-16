@@ -1,0 +1,20 @@
+# rtdl API refrence ⚡️📚
+
+## createStream
+**POST**    
+  
+  * `createStream` call for creating an AWS S3 data lake.  
+    ```
+    {
+        "active": true,
+        "message_type": "test-msg-aws",
+        "file_store_type_id": 2,
+        "region": "us-west1",
+        "bucket_name": "testBucketAWS",
+        "folder_name": "testFolderAWS",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+    }
+    ```
