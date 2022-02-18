@@ -7,3 +7,18 @@ To have rtdl build your data lake on Azure Blob Storage, you need to:
   4.  Create a new container. This is where all your data lake files will be stored.
   5.  Under Settings click on `Access Keys`.
       * Save the Storage Account Name and Access Key for use in configuring your stream in rtdl.
+  6.  Configure your stream in rtdl.
+      * Example `createStream` call for creating a data lake on Azure Blob Storage.  
+        ```
+        {
+          "active": true,
+          "message_type": "test-msg-azure",
+          "file_store_type_id": 4,
+          "bucket_name": "testBucketAzure",
+          "folder_name": "testFolderAzure",
+          "partition_time_id": 1,
+          "compression_type_id": 1,
+          "azure_storage_account_name": "[azure_storage_account_name]",
+          "azure_storage_access_key": "[azure_storage_access_key]"
+        }
+        ```

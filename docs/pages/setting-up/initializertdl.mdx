@@ -1,0 +1,20 @@
+# Initialize rtdl 🤷🏽‍♂️
+
+The following steps initialize your rtdl instance. It creates required users, databases, 
+and tables, and seeds master data.
+1.  Run `docker compose -f docker-compose.init.yml up -d`.
+    * **Note:** This configuration should be fault-tolerant, but if any containers or 
+      processes fail when running this, run `docker compose -f docker-compose.init.yml down` 
+      and retry.
+2.  After the containers `rtdl_rtdl-db-init` and `rtdl_dremio-init` exit and complete with `EXITED (0)`, kill and 
+    delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.
+3.  Run `docker compose up -d` every time after.  
+    **Note:** Your memory setting in Docker must be at least 8GB. rtdl may become unstable if it is 
+    set lower.
+    * `docker compose down` to stop.
+
+**Note #1:** If you experience file write issues preventing Dremio services from starting, 
+please add 'user: root" to the `docker-compose.init.yml` and `docker-compose.yml` files 
+in the Dremio service definition section. This issue has been encountered on Linus.  
+  
+**Note #2:** To start from scratch, run `rm -rf storage/` from the rtdl root folder.
