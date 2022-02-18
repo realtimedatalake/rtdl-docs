@@ -5,7 +5,7 @@ description: rtdl quickstart instructions
 
 # Quickstart 🌱
 ## Initialize and start rtdl
-For more detailed instructions see our [Initialize rtdl docs](/docs/setting-up/initializertdl).
+For more detailed instructions, see our [Initialize rtdl docs](/docs/setting-up/initializertdl).
 1.  Run `docker compose -f docker-compose.init.yml up -d`.
     * **Note:** This configuration should be fault-tolerant, but if any containers or 
       processes fail when running this, run `docker compose -f docker-compose.init.yml down` 
@@ -17,8 +17,13 @@ For more detailed instructions see our [Initialize rtdl docs](/docs/setting-up/i
     set lower.
     * `docker compose down` to stop.
 
+**Note #1:** To start from scratch, run `rm -rf storage/` from the rtdl root folder.  
+**Note #2:** If you experience file write issues preventing Dremio services from starting, 
+please add 'user: root" to the `docker-compose.init.yml` and `docker-compose.yml` files 
+in the Dremio service definition section. This issue has been encountered on Linux.
+
 ## Setup your storage buckets (in AWS) and stream in rtdl
-For more detailed setup instructions for your cloud provider see our setup docs:
+For more detailed setup instructions for your cloud provider, see our setup docs:
   * [Setup with AWS](/docs/setting-up/setupwithaws).
   * [Setup with GCP](/docs/setting-up/setupwithgcp).
   * [Setup with Azure](/docs/setting-up/setupwithazure).
@@ -113,7 +118,7 @@ For more detailed setup instructions for your cloud provider see our setup docs:
       **Note:** A Postman collection with examples of all rtdl API calls can be found on GitHub at [realtimedatalake/postman-rtdl-public](https://github.com/realtimedatalake/postman-rtdl-public).  
 
 ## Send data to rtdl
-For more detailed instructions see our [Send data to rtdl docs](/docs/setting-up/senddata).  
+For more detailed instructions, see our [Send data to rtdl docs](/docs/setting-up/senddata).  
 All data should be sent to the `ingest` endpoint of the ingest service on port 8080 -- e.g. http://localhost:8080/ingest.
 *   You can send ***any*** json with just ```stream_id``` in the payload and rtdl will add it to your lake.
     ```

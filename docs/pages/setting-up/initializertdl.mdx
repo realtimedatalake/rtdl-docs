@@ -18,8 +18,7 @@ and tables, and seeds master data.
     set lower.
     * `docker compose down` to stop.
 
-**Note #1:** If you experience file write issues preventing Dremio services from starting, 
+**Note #1:** To start from scratch, run `rm -rf storage/` from the rtdl root folder.  
+**Note #2:** If you experience file write issues preventing Dremio services from starting, 
 please add 'user: root" to the `docker-compose.init.yml` and `docker-compose.yml` files 
-in the Dremio service definition section. This issue has been encountered on Linus.  
-  
-**Note #2:** To start from scratch, run `rm -rf storage/` from the rtdl root folder.
+in the Dremio service definition section. This issue has been encountered on Linux.
