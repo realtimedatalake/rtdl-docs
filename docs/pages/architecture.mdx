@@ -117,17 +117,16 @@ Service written in Go that accepts a JSON payload and writes it to Kafka for pro
 Standard Kafka services. Creates data streams that can be read by a Stateful Function. Images from Bitnami.
   * kafka-zookeeper - Apache Zookeeper service
   * kafka - Apache Kafka service
+    **Public Port:** 9092
 
 ## process services
 Apache Flink [Stateful Functions](https://flink.apache.org/stateful-functions.html) cluster in a standard 
 configuration – a job manager service with paired task manager and stateful function services.
   * statefun-manager - Apache Flink Stateful Functions manager service  
-    **Public Port:** 8081  
   * statefun-worker - Apache Flink Stateful Functions task manager service
   * statefun-functions - Apache Flink Stateful function written in Go named `ingester`. Reads JSON 
     payloads posted to Kafka, processes and stores the data in Parque format based on the configuration 
     in the associated streams record.  
-    **Public Port:** 8082  
     **Environment Variables:** RTDL_DB_HOST, RTDL_DB_USER, RTDL_DB_PASSWORD, RTDL_DB_DBNAME, DREMIO_HOST, 
     DREMIO_PORT, DREMIO_USERNAME, DREMIO_PASSWORD, DREMIO_MOUNT_PATH
 
