@@ -1,5 +1,7 @@
 {
+    "initializertdl": "Intialize rtdl",
     "setupwithaws": "Setup with AWS",
     "setupwithgcp": "Setup with GCP",
-    "setupwithazure": "Setup with Azure"
+    "setupwithazure": "Setup with Azure",
+    "senddata": "Send data to rtdl"
 }

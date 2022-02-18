@@ -1,0 +1,13 @@
+{
+    "createStream": "createStream",
+    "updateStream": "updateStream",
+    "deleteStream": "deleteStream",
+    "activateStream": "activateStream",
+    "deactivateStream": "deactivateStream",
+    "getStream": "getStream",
+    "getAllStreams": "getAllStreams",
+    "getAllActiveStreams": "getAllActiveStreams",
+    "getAllFileStoreTypes": "getAllFileStoreTypes",
+    "getAllPartitionTimes": "getAllPartitionTimes",
+    "getAllCompressionTypes": "getAllCompressionTypes"
+}

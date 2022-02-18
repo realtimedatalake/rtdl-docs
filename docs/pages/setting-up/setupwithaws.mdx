@@ -55,3 +55,20 @@ To have rtdl build your data lake on AWS S3 storage, you need to:
         * Save the `Access Key ID` and `Secret Access Key` for use in 
           configuring your stream in rtdl.
 
+  5.  Configure your stream in rtdl.
+        *   Example `createStream` call for creating a data lake on AWS S3.  
+            ```
+            {
+            "active": true,
+            "message_type": "test-msg-aws",
+            "file_store_type_id": 2,
+            "region": "us-west-1",
+            "bucket_name": "testBucketAWS",
+            "folder_name": "testFolderAWS",
+            "partition_time_id": 1,
+            "compression_type_id": 1,
+            "aws_access_key_id": "[aws_access_key_id]",
+            "aws_secret_access_key": "[aws_secret_access_key]"
+            }
+            ```
+
