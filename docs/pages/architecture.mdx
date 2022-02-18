@@ -107,7 +107,7 @@ stateful function
 
 ## ingest service
 Service written in Go that accepts a JSON payload and writes it to Kafka for processing by the 
-`ingester` stateful function. 
+`ingester` stateful function.  
 **Public Port:** 8080  
 **Endpoints:**
   * /ingest -- POST; accepts JSON payload along with a write key
@@ -116,7 +116,7 @@ Service written in Go that accepts a JSON payload and writes it to Kafka for pro
 ## kafka services
 Standard Kafka services. Creates data streams that can be read by a Stateful Function. Images from Bitnami.
   * kafka-zookeeper - Apache Zookeeper service
-  * kafka - Apache Kafka service
+  * kafka - Apache Kafka service  
     **Public Port:** 9092
 
 ## process services
@@ -133,7 +133,7 @@ configuration – a job manager service with paired task manager and stateful fu
 
 ## dremio service
 Standard Dremio service. Dremio makes the data in your data lake accessible in real-time. Dremio makes it easy 
-to discover, curate, accelerate, and share data. Use port 9047 to access Dremio's UI and query your data.
-**Public Ports:** 9047, 31010, 45678  
+to discover, curate, accelerate, and share data. Use port 9047 to access Dremio's UI and query your data.  
+**Public Ports:** 9047, 31010, 45678
   * dremio - Dremio's [dremio-oss](https://github.com/dremio/dremio-oss) service
   
