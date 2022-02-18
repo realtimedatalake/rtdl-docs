@@ -1,10 +1,24 @@
+---
+title: getStream
+description: getStream API reference
+---
+
 # getStream
 **POST**  
+**Service & Port:** config:80 -- e.g. http://localhost:80/getStream  
 **Required fields:** `stream_id`  
 `getStream` gets the `stream` configuration with the supplied `stream_id`.
-  * Example `getStream` call.  
+  * Example `getStream` call body.  
     ```
     {
       "stream_id": "[stream_id]"
     }
+    ```
+  * Example `getStream` curl call.  
+    ```
+    curl --location --request POST 'http://localhost:80/getStream' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "stream_id": "[stream_id]"
+    }'
     ```

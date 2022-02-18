@@ -1,12 +1,11 @@
+---
+title: Send data to rtdl
+description: Instructions to send data to rtdl
+---
+
 # Send data to rtdl
-*   Instrument your website with [analytics-next-cc](https://github.com/realtimedatalake/analytics-next-cc) - 
-    our fork of [Segment's Analytics.js 2.0](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/) 
-    that lets you cc all of the events you send to Segment to rtdl's ingest endpoint. Its 
-    snippet is a drop-in replacement of Analytics.js 2.0/Analytics.js. Using this makes it 
-    easy to build your data lake with existing Segment instrumentation. Enter your ingest endpoint
-    as the `ccUrl` value and rtdl will handle the payload. Make sure you enter your writeKey in the 
-    `stream_alt_id` of your `stream` configuration (below).
-*   Alternatively, you can send ***any*** json with just ```stream_id``` in the payload and rtdl will add it to your lake.
+All data should be sent to the `ingest` endpoint of the ingest service on port 8080 -- e.g. http://localhost:8080/ingest.
+*   You can send ***any*** json with just ```stream_id``` in the payload and rtdl will add it to your lake.
     ```
     {
         "stream_id":"837a8d07-cd06-4e17-bcd8-aef0b5e48d31",
@@ -16,4 +15,11 @@
     }
     ```  
 	You can optionally add ```message_type``` should you choose to override the ```message_type``` specified while creating the stream.
-	rtdl will default to a message type ```rtdl_default``` if message type is absent in both stream definition and actual message
+	rtdl will default to a message type ```rtdl_default``` if message type is absent in both stream definition and actual message.
+*   Alternatively, instrument your website with [analytics-next-cc](https://github.com/realtimedatalake/analytics-next-cc) - 
+    our fork of [Segment's Analytics.js 2.0](https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/) 
+    that lets you cc all of the events you send to Segment to rtdl's ingest endpoint. Its 
+    snippet is a drop-in replacement of Analytics.js 2.0/Analytics.js. Using this makes it 
+    easy to build your data lake with existing Segment instrumentation. Enter your ingest endpoint
+    as the `ccUrl` value and rtdl will handle the payload. Make sure you enter your writeKey in the 
+    `stream_alt_id` of your `stream` configuration.

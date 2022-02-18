@@ -4,13 +4,125 @@ description: rtdl quickstart instructions
 ---
 
 # Quickstart 🌱
-## Initialize the rtdl services
-*   [Initialize rtdl](/docs/setting-up/initializertdl)
+## Initialize and start rtdl
+For more detailed instructions see our [Initialize rtdl docs](/docs/setting-up/initializertdl).
+1.  Run `docker compose -f docker-compose.init.yml up -d`.
+    * **Note:** This configuration should be fault-tolerant, but if any containers or 
+      processes fail when running this, run `docker compose -f docker-compose.init.yml down` 
+      and retry.
+2.  After the containers `rtdl_rtdl-db-init` and `rtdl_dremio-init` exit and complete with `EXITED (0)`, kill and 
+    delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.
+3.  Run `docker compose up -d` every time after.  
+    **Note:** Your memory setting in Docker must be at least 8GB. rtdl may become unstable if it is 
+    set lower.
+    * `docker compose down` to stop.
 
-## Create storage buckets and streams in rtdl
-*   [Setup with AWS](/docs/setting-up/setupwithaws)
-*   [Setup with GCP](/docs/setting-up/setupwithgcp)
-*   [Setup with Azure](/docs/setting-up/setupwithazure)
+## Setup your storage buckets (in AWS) and stream in rtdl
+For more detailed setup instructions for your cloud provider see our setup docs:
+  * [Setup with AWS](/docs/setting-up/setupwithaws).
+  * [Setup with GCP](/docs/setting-up/setupwithgcp).
+  * [Setup with Azure](/docs/setting-up/setupwithazure).
+
+1.  Create a new S3 bucket.
+    * For more information, see [Amazon’s documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html).
+2.  Create a new IAM user.
+    * For more information, see [Amazon’s documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console).
+3.  Create a IAM new policy.
+    * Use the below permissions, and attach the policy to the IAM 
+      user created in step 2. Replace `<YOUR_BUCKET_NAME>` with the 
+      name of the S3 bucket you created in step 1.
+      ```
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "ListAllBuckets",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:GetBucketLocation",
+                      "s3:ListAllMyBuckets"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::*"
+                  ]
+              },
+              {
+                  "Sid": "ListBucket",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:ListBucket"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::<YOUR_BUCKET_NAME>"
+                  ]
+              },
+              {
+                  "Sid": "ManageBucket",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:GetObject",
+                      "s3:PutObject",
+                      "s3:PutObjectAcl",
+                      "s3:DeleteObject"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::<YOUR_BUCKET_NAME>/*"
+                  ]
+              }
+          ]
+      }
+      ```
+  4.  Create access keys for your IAM user. For more information, see 
+      [Amazon's documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
+        * Save the `Access Key ID` and `Secret Access Key` for use in 
+          configuring your stream in rtdl.
+  5.  Configure your stream in rtdl.  
+      Send a call to the API at http://localhost:8080/ingest.
+      * Example `createStream` call body for creating a data lake on AWS S3.  
+        ```
+        {
+        "active": true,
+        "message_type": "test-msg-aws",
+        "file_store_type_id": 2,
+        "region": "us-west-1",
+        "bucket_name": "testBucketAWS",
+        "folder_name": "testFolderAWS",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+        }
+        ```
+      * Example `createStream` curl call for creating a data lake on AWS S3.  
+        ```
+        curl --location --request POST 'http://localhost:80/createStream' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+        "active": true,
+        "message_type": "test-msg-aws",
+        "file_store_type_id": 2,
+        "region": "us-west-1",
+        "bucket_name": "testBucketAWS",
+        "folder_name": "testFolderAWS",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+        }'
+        ```
+      **Note:** A Postman collection with examples of all rtdl API calls can be found on GitHub at [realtimedatalake/postman-rtdl-public](https://github.com/realtimedatalake/postman-rtdl-public).  
 
 ## Send data to rtdl
-*   [Send data to rtdl](/docs/setting-up/senddata)
+For more detailed instructions see our [Send data to rtdl docs](/docs/setting-up/senddata).  
+All data should be sent to the `ingest` endpoint of the ingest service on port 8080 -- e.g. http://localhost:8080/ingest.
+*   You can send ***any*** json with just ```stream_id``` in the payload and rtdl will add it to your lake.
+    ```
+    {
+        "stream_id":"837a8d07-cd06-4e17-bcd8-aef0b5e48d31",
+        "name":"user1",
+        "array":[1,2,3],
+        "properties":{"age":20}
+    }
+    ```  
+	You can optionally add ```message_type``` should you choose to override the ```message_type``` specified while creating the stream.
+	rtdl will default to a message type ```rtdl_default``` if message type is absent in both stream definition and actual message.

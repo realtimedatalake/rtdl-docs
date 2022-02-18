@@ -1,8 +1,9 @@
 {
     "index": "Overview ⚡️",
     "quickstart": "Quickstart 🌱",
+    "architecture": "Architecture 🏛",
     "setting-up": "Setting Up 🤷🏽‍♂️",
     "api-reference": "API Reference 📚",
-    "contribution": "Contribution 😎",
+    "contribution": "Contribution Guide 😎",
     "changelog": "Changelog 📝"
 }

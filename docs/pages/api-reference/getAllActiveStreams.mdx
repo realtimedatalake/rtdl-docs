@@ -1,3 +1,13 @@
+---
+title: getAllActiveStreams
+description: getAllActiveStreams API reference
+---
+
 # getAllActiveStreams
 **GET**  
+**Service & Port:** config:80 -- e.g. http://localhost:80/getAllActiveStreams  
 `getAllActiveStreams` gets all `stream` configuration records with an `active` value of true.
+  * Example `getAllActiveStreams` curl call.  
+    ```
+    curl --location --request GET 'http://localhost:80/getAllActiveStreams'
+    ```

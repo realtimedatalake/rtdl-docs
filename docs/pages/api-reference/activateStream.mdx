@@ -1,10 +1,24 @@
+---
+title: activateStream
+description: activateStream API reference
+---
+
 # activateStream
 **PUT**  
+**Service & Port:** config:80 -- e.g. http://localhost:80/activateStream  
 **Required fields:** `stream_id`  
 `activateStream` setes the `active` value in a `stream` configuration record to true.
-  * Example `activateStream` call.  
+  * Example `activateStream` call body.  
     ```
     {
       "stream_id": "[stream_id]"
     }
+    ```
+  * Example `activateStream` curl call.  
+    ```
+    curl --location --request PUT 'http://localhost:80/activateStream' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
+        "stream_id": "[stream_id]"
+    }'
     ```
