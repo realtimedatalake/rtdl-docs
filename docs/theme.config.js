@@ -67,13 +67,10 @@ export default {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Language" content="en" />
         <meta name="description" content="rtdl ⚡️ documentation" />
+        <meta name="og:url" content="https://rtdl.io/docs/" />
         <meta name="og.description" content="rtdl documentation" />
         <meta name="og:title" content="rtdl documentation" />
         <meta property="og:image" content="/docs/assets/images/og-image.png" />
-        <meta property="og:image:alt" content="rtld OG image" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="rtdl ⚡️ documentation" />
         <meta name="apple-mobile-web-app-title" content="rtdl ⚡️ documentation" />
