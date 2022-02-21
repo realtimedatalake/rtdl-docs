@@ -66,13 +66,18 @@ export default {
         <meta name="theme-color" content="#ffffff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Language" content="en" />
-        <meta name="description" content="rtdl ⚡️ documentation" />
+        <meta name="description" content="rtdl documentation" />
         <meta name="og:url" content="https://rtdl.io/docs/" />
         <meta name="og.description" content="rtdl documentation" />
-        <meta name="og:title" content="rtdl documentation" />
+        <meta name="og:title" content="rtdl ⚡️ Documentation" />
         <meta property="og:image" content="/docs/assets/images/og-image.png" />
         <meta property="og:locale" content="en" />
-        <meta property="og:site_name" content="rtdl ⚡️ documentation" />
+        <meta property="og:site_name" content="rtdl ⚡️ Documentation" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="https://twitter.com/rtdlio" />
+        <meta name="twitter:title" content="rtdl ⚡️ Documentation" />
+        <meta name="twitter:description" content="rtdl documentation" />
+        <meta name="twitter:image" content="/docs/assets/images/og-image.png" />
         <meta name="apple-mobile-web-app-title" content="rtdl ⚡️ documentation" />
         <link
           rel="apple-touch-icon"
