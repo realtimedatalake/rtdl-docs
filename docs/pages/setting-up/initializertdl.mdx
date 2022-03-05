@@ -12,7 +12,8 @@ and tables, and seeds master data.
       processes fail when running this, run `docker compose -f docker-compose.init.yml down` 
       and retry.
 2.  After the containers `rtdl_rtdl-db-init` and `rtdl_dremio-init` exit and complete with `EXITED (0)`, kill and 
-    delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.
+    delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.  
+    **Note:**  You can check the status of all running containers with `docker ps -a`.
 3.  Run `docker compose up -d` every time after.  
     **Note:** Your memory setting in Docker must be at least 8GB. rtdl may become unstable if it is 
     set lower.
