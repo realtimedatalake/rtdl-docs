@@ -11,15 +11,15 @@ and tables, and seeds master data.
     * **Note:** This configuration should be fault-tolerant, but if any containers or 
       processes fail when running this, run `docker compose -f docker-compose.init.yml down` 
       and retry.
-2.  After the containers `rtdl_rtdl-db-init` and `rtdl_dremio-init` exit and complete with `EXITED (0)`, kill and 
-    delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.  
-    **Note:**  You can check the status of all running containers with `docker ps -a`.
+2.  After the containers `rtdl_rtdl-db-init`, `rtdl_dremio-init`, and `rtdl_redpanda-init` exit and complete 
+    with `EXITED (0)`, kill and delete the rtdl container set by running 
+    `docker compose -f docker-compose.init.yml down`.
 3.  Run `docker compose up -d` every time after.  
     **Note:** Your memory setting in Docker must be at least 8GB. rtdl may become unstable if it is 
     set lower.
     * `docker compose down` to stop.
 
 **Note #1:** To start from scratch, run `rm -rf storage/` from the rtdl root folder.  
-**Note #2:** If you experience file write issues preventing Dremio services from starting, 
-please add 'user: root" to the `docker-compose.init.yml` and `docker-compose.yml` files 
-in the Dremio service definition section. This issue has been encountered on Linux.
+**Note #2:** If you experience file write issues preventing Dremio and/or Redpanda services 
+from starting, please add `user: root` to the `docker-compose.init.yml` and `docker-compose.yml` 
+files in the Dremio and Redpanda service definitions. This issue has been encountered on Linux.

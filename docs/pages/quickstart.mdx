@@ -10,17 +10,18 @@ For more detailed instructions, see our [Initialize rtdl docs](/docs/setting-up/
     * **Note:** This configuration should be fault-tolerant, but if any containers or 
       processes fail when running this, run `docker compose -f docker-compose.init.yml down` 
       and retry.
-2.  After the containers `rtdl_rtdl-db-init` and `rtdl_dremio-init` exit and complete with `EXITED (0)`, kill and 
-    delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.
+2.  After the containers `rtdl_rtdl-db-init`, `rtdl_dremio-init`, and `rtdl_redpanda-init` exit and complete 
+    with `EXITED (0)`, kill and delete the rtdl container set by running 
+    `docker compose -f docker-compose.init.yml down`.
 3.  Run `docker compose up -d` every time after.  
     **Note:** Your memory setting in Docker must be at least 8GB. rtdl may become unstable if it is 
     set lower.
     * `docker compose down` to stop.
 
 **Note #1:** To start from scratch, run `rm -rf storage/` from the rtdl root folder.  
-**Note #2:** If you experience file write issues preventing Dremio services from starting, 
-please add 'user: root" to the `docker-compose.init.yml` and `docker-compose.yml` files 
-in the Dremio service definition section. This issue has been encountered on Linux.
+**Note #2:** If you experience file write issues preventing Dremio and/or Redpanda services 
+from starting, please add `user: root` to the `docker-compose.init.yml` and `docker-compose.yml` 
+files in the Dremio and Redpanda service definitions. This issue has been encountered on Linux.
 
 ## Setup your storage buckets (in AWS) and stream in rtdl
 For more detailed setup instructions for your cloud provider, see our setup docs:
@@ -77,12 +78,13 @@ For more detailed setup instructions for your cloud provider, see our setup docs
           ]
       }
       ```
-  4.  Create access keys for your IAM user. For more information, see 
+  4.  Attach the policy created in step 3 to the IAM user created in step 2.
+  5.  Create access keys for your IAM user. For more information, see 
       [Amazon's documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
         * Save the `Access Key ID` and `Secret Access Key` for use in 
           configuring your stream in rtdl.
-  5.  Configure your stream in rtdl.  
-      Send a call to the API at http://localhost:8080/ingest.
+  6.  Create a stream configuration record in rtdl.  
+      Send a call to the API at http://localhost:80/createStream.
       * Example `createStream` call body for creating a data lake on AWS S3.  
         ```
         {

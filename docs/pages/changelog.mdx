@@ -5,6 +5,56 @@ description: rtdl changelog
 
 # Changelog 📝
 
+## V0.1.1 - Current status -- what works and what doesn't
+
+### What works? 🚀
+rtdl's initial feature set is built and working. You can use the API on port 80 to 
+configure streams that ingest json from an rtdl endpoint on port 8080, process them into Parquet, 
+and save the files to a destination configured in your stream. rtdl can write files locally, to 
+AWS S3, GCP Cloud Storage, and Azure Blob Storage and you can query your data via Dremio's web UI
+at http://localhost:9047 (login with Username: `rtdl` and Password `rtdl1234`).
+
+### What's new? 💥
+  * Replaced Kafka & Zookeeper with [Redpanda](https://github.com/redpanda-data/redpanda).
+  * Added support for HDFS.
+  * Fixed issue with handling booleans when writing Parquet.
+  * Added several logo variants and a banner to the public directory.
+
+### What doesn't work/what's next on the roadmap? 🚴🏼  
+  * [Dremio Cloud](https://www.dremio.com/platform/cloud/) support.
+  * Apache Hudi support.
+  * Start using GitHub Projects for work tracking.
+  * Research and implementation for Apache Iceberg, Delta Lake, and Project Nessie.
+  * Community contribution: Stateful Function for PII detection and masking.
+  * Graphical user interface.
+
+
+## V0.1.0 - Current status -- what works and what doesn't
+
+### What works? 🚀
+rtdl's initial feature set is built and working. You can use the API on port 80 to 
+configure streams that ingest json from an rtdl endpoint on port 8080, process them into Parquet, 
+and save the files to a destination configured in your stream. rtdl can write files locally, to 
+AWS S3, GCP Cloud Storage, and Azure Blob Storage and you can query your data with Dremio on port 
+9047 (login with Username: `rtdl` and Password `rtdl1234`).
+
+### What's new? 💥
+  * Added support for Azure Blob Storage V2 (please note that for events written to Azure Blob Storage
+    V2 - it can take time up to 1 minute for data to reflect in Dremio)
+  * Added support for GZIP and LZO compressions in addition to SNAPPY (default). Specify 
+    `compression_type_id` as 2 for GZIP and 3 for LZO
+  * Added support for Segment webhooks. You can set up RTDL `ingester` endpoint as a webhook in Segment. 
+    You will need to create a stream with the `stream_alt_id` as either the `Source ID` or the 
+    `Write Key` from the `API Keys` tab of `Settings` for the Source connected to the Webhook 
+    Destination.
+
+### What doesn't work/what's next on the roadmap? 🚴🏼  
+  * Start using GitHub Projects for work tracking
+  * Research and implementation for Apache Hudi, Apache Iceberg, Delta Lake, and Project Nessie
+  * Writing to HDFS
+  * Graphical User Interface
+
+
 ## V0.0.2 - 20220209
 
 ### What works? 🚀
@@ -20,7 +70,6 @@ Username: `rtdl` and Password `rtdl1234`).
     `createStream` API call. Previously, you had to double-quote everything and flatten.
   * Added CONTRIBUTING.md and decided to use a DCO over a CLA - tl;dr use -s when you commit, like 
     `git commit -s -m "..."`
-
 
 ### What doesn't work/what's next on the roadmap? 🚴🏼
   * Add support for Azure Blob Storage

@@ -5,94 +5,91 @@ description: Instructions to setup rtdl with AWS
 
 # rtdl setup with AWS 🤷🏽‍♂️
 
-To have rtdl build your data lake on AWS S3 storage, you need to:
-  1.  Create a new S3 bucket.
+To have rtdl build your data lake on AWS S3 storage, from the AWS Console::
+  1.  Create a new S3 bucket. Save your bucket name and region for use in configuring your stream in rtdl.
       * For more information, see [Amazon’s documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html).
   2.  Create a new IAM user.
       * For more information, see [Amazon’s documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console).
-  3.    Create a IAM new policy.
-        *   Use the below permissions, and attach the policy to the IAM 
-            user created in step 2. Replace `<YOUR_BUCKET_NAME>` with the 
-            name of the S3 bucket you created in step 1.
+  3.  Create a IAM new policy.
+      * Use the below permissions. Replace `<YOUR_BUCKET_NAME>` with the name of the S3 bucket you created in step 1.  
+      ```
+      {
+          "Version": "2012-10-17",
+          "Statement": [
+              {
+                  "Sid": "ListAllBuckets",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:GetBucketLocation",
+                      "s3:ListAllMyBuckets"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::*"
+                  ]
+              },
+              {
+                  "Sid": "ListBucket",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:ListBucket"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::<YOUR_BUCKET_NAME>"
+                  ]
+              },
+              {
+                  "Sid": "ManageBucket",
+                  "Effect": "Allow",
+                  "Action": [
+                      "s3:GetObject",
+                      "s3:PutObject",
+                      "s3:PutObjectAcl",
+                      "s3:DeleteObject"
+                  ],
+                  "Resource": [
+                      "arn:aws:s3:::<YOUR_BUCKET_NAME>/*"
+                  ]
+              }
+          ]
+      }
+      ```  
+      <img src="/docs/assets/images/setupwithaws-01.png"></img>  
+      ![](/blog/static/images/blog/20220307-how-to-build-a-real-time-data-lake-on-aws-with-rtdl-and-segment/005.png)
+  4.  Attach the policy created in step 3 to the IAM user created in step 2.
+  5.  Create access keys for your IAM user.
+      * For more information, see [Amazon's documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
+      * Save the `Access Key ID` and `Secret Access Key` for use in configuring your stream in rtdl.
+5.    Configure your stream in rtdl.  
+      Send a call to the API at http://localhost:80/createStream.
+      * Example `createStream` call body for creating a data lake on AWS S3.  
         ```
         {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Sid": "ListAllBuckets",
-                    "Effect": "Allow",
-                    "Action": [
-                        "s3:GetBucketLocation",
-                        "s3:ListAllMyBuckets"
-                    ],
-                    "Resource": [
-                        "arn:aws:s3:::*"
-                    ]
-                },
-                {
-                    "Sid": "ListBucket",
-                    "Effect": "Allow",
-                    "Action": [
-                        "s3:ListBucket"
-                    ],
-                    "Resource": [
-                        "arn:aws:s3:::<YOUR_BUCKET_NAME>"
-                    ]
-                },
-                {
-                    "Sid": "ManageBucket",
-                    "Effect": "Allow",
-                    "Action": [
-                        "s3:GetObject",
-                        "s3:PutObject",
-                        "s3:PutObjectAcl",
-                        "s3:DeleteObject"
-                    ],
-                    "Resource": [
-                        "arn:aws:s3:::<YOUR_BUCKET_NAME>/*"
-                    ]
-                }
-            ]
+        "active": true,
+        "message_type": "test-msg-aws",
+        "file_store_type_id": 2,
+        "region": "us-west-1",
+        "bucket_name": "testBucketAWS",
+        "folder_name": "testFolderAWS",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
         }
         ```
-  4.    Attach the policy created in step 3 to the IAM user created in step 2.
-
-  5.    Create access keys for your IAM user.
-        *   For more information, see [Amazon's documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey).
-        *   Save the `Access Key ID` and `Secret Access Key` for use in 
-            configuring your stream in rtdl.
-
-  5.    Configure your stream in rtdl.  
-        Send a call to the API at http://localhost:80/createStream.
-        *   Example `createStream` call body for creating a data lake on AWS S3.  
-            ```
-            {
-            "active": true,
-            "message_type": "test-msg-aws",
-            "file_store_type_id": 2,
-            "region": "us-west-1",
-            "bucket_name": "testBucketAWS",
-            "folder_name": "testFolderAWS",
-            "partition_time_id": 1,
-            "compression_type_id": 1,
-            "aws_access_key_id": "[aws_access_key_id]",
-            "aws_secret_access_key": "[aws_secret_access_key]"
-            }
-            ```
-        *   Example `createStream` curl call for creating a data lake on AWS S3.  
-            ```
-            curl --location --request POST 'http://localhost:80/createStream' \
-            --header 'Content-Type: application/json' \
-            --data-raw '{
-            "active": true,
-            "message_type": "test-msg-aws",
-            "file_store_type_id": 2,
-            "region": "us-west-1",
-            "bucket_name": "testBucketAWS",
-            "folder_name": "testFolderAWS",
-            "partition_time_id": 1,
-            "compression_type_id": 1,
-            "aws_access_key_id": "[aws_access_key_id]",
-            "aws_secret_access_key": "[aws_secret_access_key]"
-            }'
-            ```
+      * Example `createStream` curl call for creating a data lake on AWS S3.  
+        ```
+        curl --location --request POST 'http://localhost:80/createStream' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+        "active": true,
+        "message_type": "test-msg-aws",
+        "file_store_type_id": 2,
+        "region": "us-west-1",
+        "bucket_name": "testBucketAWS",
+        "folder_name": "testFolderAWS",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+        }'
+        ```
