@@ -34,20 +34,20 @@ used to lookup master data necessary for creating successful `stream` records li
   Sample ```createStream``` payload for creating Parquet file in AWS S3
   ```	
   {
-	"active": true,
-  "message_type": "test-msg-aws",
-	"file_store_type_id": 2,
-	"region": "us-east-1",
-	"bucket_name": "testBucketAWS",
-	"folder_name": "testFolderAWS",
-  "partition_time_id": 1,
-  "compression_type_id": 1,
-	"aws_access_key_id": "[aws_access_key_id]",
-  "aws_secret_access_key": "[aws_secret_access_key]"
+    "active": true,
+    "message_type": "test-msg-aws",
+    "file_store_type_id": 2,
+    "region": "us-east-1",
+    "bucket_name": "testBucketAWS",
+    "folder_name": "testFolderAWS",
+    "partition_time_id": 1,
+    "compression_type_id": 1,
+    "aws_access_key_id": "[aws_access_key_id]",
+    "aws_secret_access_key": "[aws_secret_access_key]"
   }
   ```
   
-  ```file_store_type_id``` - 1 for Local, 2 for AWS, 3 for GCS
+  ```file_store_type_id``` - 1 for Local, 2 for AWS, 3 for GCS, 4 for Azure  
   ```partiion_time_id``` - 1 - HOURLY, 2 - DAILY, 3 - WEEKLY, 4 - MONTHLY, 5 - QAURTERLY
   
   For cloud storage - final file path would be 
@@ -106,18 +106,16 @@ stateful function
     * FOREIGN KEY(compression_type_id) REFERENCES compression_types(compression_type_id)
 
 ## ingest service
-Service written in Go that accepts a JSON payload and writes it to Kafka for processing by the 
+Service written in Go that accepts a JSON payload and writes it to Redpanda/Kafka for processing by the 
 `ingester` stateful function.  
 **Public Port:** 8080  
 **Endpoints:**
   * /ingest -- POST; accepts JSON payload along with a write key
   * /refreshCache -- GET; triggers a refresh of the streams cache in the `ingester` stateful function
 
-## kafka services
-Standard Kafka services. Creates data streams that can be read by a Stateful Function. Images from Bitnami.
-  * kafka-zookeeper - Apache Zookeeper service
-  * kafka - Apache Kafka service  
-    **Public Port:** 9092
+## redpanda service
+Standard [redpanda](https://github.com/redpanda-data/redpanda) service. Creates Kafka data streams that can be read by a Stateful Function.
+**Public Ports:** 9092, 29092
 
 ## process services
 Apache Flink [Stateful Functions](https://flink.apache.org/stateful-functions.html) cluster in a standard 
@@ -125,15 +123,14 @@ configuration – a job manager service with paired task manager and stateful fu
   * statefun-manager - Apache Flink Stateful Functions manager service  
   * statefun-worker - Apache Flink Stateful Functions task manager service
   * statefun-functions - Apache Flink Stateful function written in Go named `ingester`. Reads JSON 
-    payloads posted to Kafka, processes and stores the data in Parque format based on the configuration 
+    payloads posted to Redpanda/Kafka, processes and stores the data in Parque format based on the configuration 
     in the associated streams record.  
     **Environment Variables:** RTDL_DB_HOST, RTDL_DB_USER, RTDL_DB_PASSWORD, RTDL_DB_DBNAME, DREMIO_HOST, 
     DREMIO_PORT, DREMIO_USERNAME, DREMIO_PASSWORD, DREMIO_MOUNT_PATH
 
 
 ## dremio service
-Standard Dremio service. Dremio makes the data in your data lake accessible in real-time. Dremio makes it easy 
+Standard [dremio-oss](https://github.com/dremio/dremio-oss) service. Dremio makes the data in your data lake accessible in real-time. Dremio makes it easy 
 to discover, curate, accelerate, and share data. Use port 9047 to access Dremio's UI and query your data.  
 **Public Ports:** 9047, 31010, 45678
-  * dremio - Dremio's [dremio-oss](https://github.com/dremio/dremio-oss) service
   

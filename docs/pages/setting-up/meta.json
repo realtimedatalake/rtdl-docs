@@ -1,7 +1,5 @@
 {
-    "initializertdl": "Intialize rtdl",
-    "setupwithaws": "Setup with AWS",
-    "setupwithgcp": "Setup with GCP",
-    "setupwithazure": "Setup with Azure",
-    "senddata": "Send data to rtdl"
+    "deploy-initialize": "Deploy and Initialize",
+    "configure-data-lake": "Configure a Data Lake",
+    "send-data": "Send Data"
 }

@@ -1,0 +1,77 @@
+---
+title: Sending Data to rtdl via a Segment Webhooks destination
+description: Instructions to configure both Segment and rtdl to build a real-time data lake from a source in Segment
+---
+
+# Sending Data to rtdl via a Segment Webhooks destination 🤷🏽‍♂️
+## Configure and activate a Webhooks destination in Segment
+  1.  In Segment, under Connections -> Sources, select the source that you want to use to build your data lake.  
+      <img src="/docs/assets/images/sendsegmentwebhook-01.png"></img>  
+  2.  Click the Add Destination button.
+  3.  On the Catalog page in the search bar, enter "webhooks" and select the Webhooks destination.  
+      <img src="/docs/assets/images/sendsegmentwebhook-02.png"></img>  
+  4.  Click the Configure Webhooks button.
+  5.  Give your destination a name and click the Save button.
+  6.  Under Connection Settings, click the "Webhooks" button.  
+      <img src="/docs/assets/images/sendsegmentwebhook-03.png"></img>  
+  7.  Under Webhook URL, enter the ingest endpoint for rtdl and click the Save button.
+      * Your ingest endpoint should be: `http://[EC2-Public-IP-Address]:8080/ingest`.  
+      <img src="/docs/assets/images/sendsegmentwebhook-04.png"></img>  
+  10. Click the toggle to turn on delivery to your destination.  
+      <img src="/docs/assets/images/sendsegmentwebhook-05.png"></img>  
+  11. Under Connections -> Sources, select the source for your data lake again.
+  12. Click on Settings in the top-navigation and then API Keys in the left-navigation.  
+      <img src="/docs/assets/images/sendsegmentwebhook-06.png"></img>  
+  13. Save the `Source ID` for use in configuring your stream in rtdl.  
+      <img src="/docs/assets/images/sendsegmentwebhook-07.png"></img>  
+
+
+## Configure your stream in rtdl
+From terminal on your local computer:
+  1.  Create a stream configuration record by sending a call to the API at http://[EC2-Public-IP-Address]:80/createStream.
+      * Example `createStream` call body for creating a data lake on AWS S3.  
+        ```
+        {
+        "stream_alt_id": "[segment-webhooks-source-id]",
+        "active": true,
+        "message_type": "rtdl-demo-aws",
+        "file_store_type_id": 2,
+        "region": "[bucket-region]",
+        "bucket_name": "[bucket-name]",
+        "folder_name": "rtdl-demo-aws",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+        }
+        ```
+      * Example `createStream` curl call for creating a data lake on AWS S3.  
+        ```
+        curl --location --request POST 'http://[EC2-Public-IP-Address]:80/createStream' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+        "stream_alt_id": "[segment-webhooks-source-id]",
+        "active": true,
+        "message_type": "rtdl-demo-aws",
+        "file_store_type_id": 2,
+        "region": "[bucket-region]",
+        "bucket_name": "[bucket-name]",
+        "folder_name": "rtdl-demo-aws",
+        "partition_time_id": 1,
+        "compression_type_id": 1,
+        "aws_access_key_id": "[aws_access_key_id]",
+        "aws_secret_access_key": "[aws_secret_access_key]"
+        }'
+        ```
+
+## Access your data lake with Dremio
+  1.  Go to http://[EC2-Public-IP-Address]:9047 to access Dremio's web UI.  
+      <img src="/docs/assets/images/sendsegmentwebhook-08.png"></img>  
+  2.  Login with Username: `rtdl` and Password `rtdl1234`.
+  3.  Click on your data lake in the bottom-left of the screen.  
+      <img src="/docs/assets/images/sendsegmentwebhook-09.png"></img>  
+
+From here, you can see the different types of data in your data lake – `identify`, `page`, and `track` events in this example ...  
+<img src="/docs/assets/images/sendsegmentwebhook-10.png"></img>  
+... Or you can navigate to the SQL Runner in the left-navigation and query your data.
+<img src="/docs/assets/images/sendsegmentwebhook-11.png"></img>  

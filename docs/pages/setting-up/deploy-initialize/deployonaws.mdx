@@ -1,0 +1,143 @@
+---
+title: Deploy rtdl on AWS
+description: Instructions to deploy rtdl on AWS
+---
+
+# Deploy rtdl on AWS 🤷🏽‍♂️
+## Create your EC2 instance
+From the AWS Console:
+  1.  In the search bar type "ec2" and select EC2.  
+      <img src="/docs/assets/images/deployonaws-01.png"></img>  
+  2.  Click on Instances in the left-navigation.
+  3.  Click the Launch Instances button at the top of the page.
+  4.  Click the AWS Marketplace tab, search for "ubuntu minimal", and select "Minimal Ubuntu 21.10 - Impish".  
+      <img src="/docs/assets/images/deployonaws-02.png"></img>  
+  5.  Click the Continue button.
+  6.  Choose your instance type, and click the Review and Launch button.
+      * Pick an instance type with at least 8GiB memory. This tutorial will use a t3a.large.
+  7.  Scroll down to the Storage section, and click Edit Storage.
+  8.  Increase the storage size to 30GiB, and click the Review and Launch button.  
+      <img src="/docs/assets/images/deployonaws-03.png"></img>  
+  9.  Review your instance and click the Launch button.  
+      <img src="/docs/assets/images/deployonaws-04.png"></img>  
+  10. Select Create a New Key Pair from the top drop-down, select the key pair type, give your key pair a name, and download your key pair for later use.
+  11. Click the Launch Instances button.
+  12. After your EC2 instance is created, click on Instances in the left-navigation.
+  13. Save the Public IPv4 Address of your new EC2 instance for later use.
+  14. In the left-navigation under Network & Security, click Security Groups.
+  15. Click on the Security Group Id for the one with a Security Group Name starting with "Minimal Ubuntu 21-10 - Impish...".  
+      <img src="/docs/assets/images/deployonaws-05.png"></img>  
+  16. Under Inbound Rules, click the checkbox next to the inbound rule and click the Edit Inbound Rules button.  
+      <img src="/docs/assets/images/deployonaws-06.png"></img>  
+  17. Add Custom TCP rules with a source of "Anywhere-IPv4" for ports 80, 8080, 9047, 9092, 29092, 31010, and 45678.  
+      <img src="/docs/assets/images/deployonaws-07.png"></img>  
+  18. Click the Save Rules button.
+
+## Set up your EC2 instance and deploy rtdl
+From terminal on your local computer:
+  1.  chmod the key you downloaded when you created with your EC2 instance.  
+      `% sudo chmod 700 "[your key file]"`
+  2.  SSH into your new EC2 instance.  
+      `% ssh ubuntu@[EC2-Public-IP-Address] -i "[your key file]"`
+  3.  Update everything.  
+      ```
+      $ sudo apt update
+      Get:1 http://us-west-2.ec2.archive.ubuntu.com/ubuntu impish InRelease [270 kB]
+      Get:2 http://us-west-2.ec2.archive.ubuntu.com/ubuntu impish-updates InRelease [110 kB]
+      ...
+      $ sudo apt upgrade
+      Reading package lists... Done
+      Building dependency tree... Done
+      ...
+      ```
+  4.  Install useful and necessary tools.  
+      `$ sudo apt install git vim curl wget`
+  5.  Install Docker  
+      ```
+      $ sudo apt remove docker docker-engine docker.io containerd runc
+      Reading package lists... Done
+      Building dependency tree... Done
+      ...
+      $ sudo apt install ca-certificates gnupg lsb-release
+      Reading package lists... Done
+      Building dependency tree... Done
+      ...
+      $ sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+      $ sudo echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      $ sudo apt update
+      Hit:1 http://us-west-2.ec2.archive.ubuntu.com/ubuntu impish InRelease
+      ...
+      Get:4 https://download.docker.com/linux/ubuntu impish InRelease [48.9 kB]                                 
+      Get:5 https://download.docker.com/linux/ubuntu impish/stable amd64 Packages [4136 B]
+      ...
+      $ sudo apt install docker-ce docker-ce-cli containerd.io docker-compose
+      Reading package lists... Done
+      Building dependency tree... Done
+      ...
+      $ sudo systemctl status docker
+      ● docker.service - Docker Application Container Engine
+          Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+          Active: active (running) since Fri 2022-03-04 05:40:29 UTC; 1min 24s ago
+      ...
+      $ sudo systemctl enable docker
+      Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
+      Executing: /lib/systemd/systemd-sysv-install enable docker
+      $ sudo systemctl restart docker
+      $ sudo docker-compose --version
+      docker-compose version 1.27.4, build unknown
+      ```
+  6.  Clone the [rtdl repository](https://github.com/realtimedatalake/rtdl).  
+      `git clone https://github.com/realtimedatalake/rtdl.git`
+  7.  cd into the rtdl directory.  
+      `cd rtdl/`
+  8.  Update `docker-compose.init.yml` to work with Linux.  
+      `sudo vim docker-compose.init.yml`  
+      Change:  
+      ```
+      ...
+      dremio:
+        platform: linux/amd64
+        image: dremio/dremio-oss
+        container_name: rtdl_dremio
+        volumes:
+      ...
+      ```
+      To:
+      ```
+      ...
+      dremio:
+        platform: linux/amd64
+        image: dremio/dremio-oss
+        container_name: rtdl_dremio
+        user: root
+        volumes:
+      ...
+      ```  
+      AND  
+      Change:
+      ```
+      ...
+      image: docker.vectorized.io/vectorized/redpanda:v21.9.5
+      container_name: rtdl_redpanda
+      volumes:
+      ...
+      ```  
+      To:
+      ```
+      ...
+      image: docker.vectorized.io/vectorized/redpanda:v21.9.5
+      container_name: rtdl_redpanda
+      user: root
+      volumes:
+      ...
+      ```  
+      And save.
+  9.  Repeat for `docker-compose.yml`.
+  10. Initialize rtdl.  
+      `sudo docker-compose -f docker-compose.init.yml up -d`
+  11. After the containers `rtdl_rtdl-db-init`, `rtdl_dremio-init`, and `rtdl_redpanda-init` exit and complete with `EXITED (0)`, kill and delete the rtdl container set by running `docker compose -f docker-compose.init.yml down`.
+      `sudo docker-compose -f docker-compose.init.yml down`  
+      **Note:**  You can check the status of all running containers with `sudo docker ps -a`.
+  12. Run rtdl.  
+      `sudo docker-compose up -d`  
+      * Run `sudo docker compose down` to stop.
