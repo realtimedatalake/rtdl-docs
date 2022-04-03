@@ -1,5 +1,6 @@
 {
   "setupwithaws": "Setup with AWS",
   "setupwithgcp": "Setup with GCP",
-  "setupwithazure": "Setup with Azure"
+  "setupwithazure": "Setup with Azure",
+  "setupwithhdfs": "Setup with HDFS"
 }

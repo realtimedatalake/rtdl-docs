@@ -1,5 +1,6 @@
 {
     "deploy-initialize": "Deploy and Initialize",
     "configure-data-lake": "Configure a Data Lake",
+    "configure-metadata-catalog": "Configure a Metadata Catalog",
     "send-data": "Send Data"
 }

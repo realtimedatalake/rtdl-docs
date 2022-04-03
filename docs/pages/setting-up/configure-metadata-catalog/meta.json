@@ -1,0 +1,4 @@
+{
+    "configureawsglue": "Configure AWS Glue",
+    "configuresnowflakeexternaltables": "Configure Snowflake External Tables"
+}
