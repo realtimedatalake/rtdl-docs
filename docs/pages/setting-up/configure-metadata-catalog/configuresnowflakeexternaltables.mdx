@@ -5,7 +5,7 @@ description: Instructions to setup with Snowflake External Tables
 
 # Configure rtdl with Snowflake External Tables 🤷🏽‍♂️
 
-Snowflake External Table support only works with AWS S3 storage for now. It also follows a non-standard congifuration path for now. It requires updates to the `docker-compose.yml` file. This method of configuration is temporary. We will be moving to a more standard method in the future.
+[Snowflake External Tables](https://docs.snowflake.com/en/user-guide/tables-external-intro.html) support only works with AWS S3 storage for now. It also follows a non-standard congifuration path for now. It requires updates to the `docker-compose.yml` file. This method of configuration is temporary. We will be moving to a more standard method in the future.
 
 To have rtdl catalog your data lake metadata in Snowflake External Table so you can more easily access your data on with Snowflake, you need a Snowflake data warehouse as a prerequisite. In the `docker-compose.yml` file, under the statefun-functions container:
   * Set `SNOWFLAKE_ENABLED` to `true` (or `"true"` on Mac/Linux).

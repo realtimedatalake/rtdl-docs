@@ -7,7 +7,7 @@ description: Instructions to setup rtdl with HDFS
 
 To have rtdl build your data lake on HDFS, you need to have a HDFS available as a prerequisite:
   * If you already have your own Hadoop cluster available, use it. If not, uncomment and use the 
-  Big Data Europe images included in the Docker Compose files.
+  Big Data Europe images included in the Docker Compose files in the `Hadoop Services` section.
   * When creating your `stream` record:
     * `file_store_type_id` must be set to `5`,
     * `namenode_host` and `namenode_port` must be specified.

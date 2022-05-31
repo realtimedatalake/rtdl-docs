@@ -5,6 +5,32 @@ description: rtdl changelog
 
 # Changelog 📝
 
+## V0.2.0 - Current status -- what works and what doesn't
+
+### What works? 🚀
+rtdl's initial feature set is built and working. You can use the API on port 80 to 
+configure streams that ingest json from an rtdl endpoint on port 8080, process them into Parquet, 
+and save the files to a destination configured in your stream. rtdl can write files locally, to 
+HDFS, to AWS S3, GCP Cloud Storage, and Azure Blob Storage and you can query your data via Dremio's 
+web UI at http://localhost:9047 (login with Username: `rtdl` and Password `rtdl1234`). rtdl supports 
+writing in the Delta Lake table format as well as integration with the [AWS Glue](https://aws.amazon.com/glue/) 
+and [Snowflake External Tables](https://docs.snowflake.com/en/user-guide/tables-external-intro.html) 
+metadata catalogs.
+
+### What's new? 💥
+  * **Upgrading to v0.2.0 requires following the steps in our [upgrade guide](https://rtdl.io/docs/setting-up/upgrade-guides/upgradeguidev020).**
+  * Added Delta Lake support.
+  * Switched to file-based configuration storage (removed dependency on PostgreSQL).
+
+### What doesn't work/what's next on the roadmap? 🚴🏼  
+  * Community contribution: Stateful Function for PII detection and masking.
+  * Making AWS Glue, Snowflake External Tables, and Delta Lake support on a by-stream basis.
+  * git integration for `stream` configurations.
+  * Research and implementation for Apache Hudi, Apache Iceberg, and Project Nessie.
+  * Graphical user interface.
+  * [Dremio Cloud](https://www.dremio.com/platform/cloud/) support.
+
+
 ## V0.1.2 - Current status -- what works and what doesn't
 
 ### What works? 🚀

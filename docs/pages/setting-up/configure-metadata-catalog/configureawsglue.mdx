@@ -5,7 +5,7 @@ description: Instructions to setup with an AWS Glue metadata catalog
 
 # Configure rtdl with AWS Glue 🤷🏽‍♂️
 
-AWS Glue support follows a non-standard congifuration path for now. It requires updates to the `docker-compose.yml` file. This method of configuration is temporary. We will be moving to a more standard method in the future.
+[AWS Glue](https://aws.amazon.com/glue/) support follows a non-standard congifuration path for now. It requires updates to the `docker-compose.yml` file. This method of configuration is temporary. We will be moving to a more standard method in the future.
 
 To have rtdl catalog your data lake metadata in AWS Glue so you can more easily access your data on with AWS services, you need an AWS Glue instance as a prerequisite. In the `docker-compose.yml` file, under the statefun-functions container:
   * Set `GLUE_ENABLE` to `true` (or `"true"` on Mac/Linux).

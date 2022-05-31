@@ -1,4 +1,5 @@
 {
+  "setupdeltalake": "Setup a Delta Lake",
   "setupwithaws": "Setup with AWS",
   "setupwithgcp": "Setup with GCP",
   "setupwithazure": "Setup with Azure",

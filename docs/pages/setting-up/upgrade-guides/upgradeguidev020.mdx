@@ -1,0 +1,20 @@
+---
+title: Upgrade Guide -> v0.2.0
+description: Instructions to upgrade to rtdl v0.2.0 from previous versions
+---
+
+# Upgrade Guide -> v0.2.0
+
+rtdl v0.2.0 switches from using a PostgreSQL database to store stream configuration data to file-based configuration storage. Each stream configuration is stored in an individual file in the `storage/configs/` folder.  
+  
+If you were running a prior version of rtdl and want to upgrade to v0.2.0, you have to migrate your stream configurations before upgrading rtdl.
+1.  Start your pre-v0.2.0 version of rtdl.
+2.  In a different directory, clone the [`rtdl-tools`](https://github.com/realtimedatalake/rtdl-tools) repo.
+    *   `git clone https://github.com/realtimedatalake/rtdl-tools`
+3.  `cd rtdl-tools`
+4.  Run the `migrateconfigs` tool.  
+    **Note:** Requires [Go](https://go.dev/doc/install) be insalled.
+    *   `go run migrateconfigs.go <absolute path to directory in rtdl to contain configuration files>`  
+    e.g. `go run migrateconfigs.go /home/rtdl/storage/configs`
+5.  Stop your pre-v0.2.0 version of rtdl.
+6.  Upgrade to rtdl v0.2.0.

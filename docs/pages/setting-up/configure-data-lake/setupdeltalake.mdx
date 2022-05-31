@@ -1,0 +1,16 @@
+---
+title: Setup a Delta Lake
+description: Instructions to setup rtdl to build a data lake using the Delta Lake format
+---
+
+# rtdl setup for Delta Lake 🤷🏽‍♂️
+
+rtdl can write your data lake in the [Delta Lake](https://delta.io/) table format. It works with local storage or on any cloud vendor that rtdl supports.
+
+To have rtdl build your Delta Lake, you need to enable it in your `docker-compose.yml` file.
+* Uncomment the `Spark Services` section.
+* In the `Processing Services` section:
+  * In the `statefun-manager` container, uncomment the volume that begins with `./deltawriter/module.yaml:...`.
+  * In the `statefun-worker` container, uncomment the volume that begins with `./deltawriter/module.yaml:...`.
+
+After these changes and restarting rtdl, any streams that rtdl processes will write in Delta Lake format.
